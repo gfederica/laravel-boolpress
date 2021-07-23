@@ -29,6 +29,7 @@ Route::middleware('auth') // autenticazione
     ->group(function() {
     
         Route::get('/', 'HomeController@index')->name('home');
+        // rotte della crud
         Route::resource('posts', 'PostController');
 
 });
