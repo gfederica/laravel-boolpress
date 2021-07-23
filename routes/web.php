@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 //rotte per autenticazione
 // Auth::routes(["register" => false]); // per disabilitare la registrazione
 // Auth::routes(["verify" => true]); // per attivare la verifica mail al momento della registrazione // di default è disabilitata
@@ -37,3 +33,5 @@ Route::middleware('auth') // autenticazione
 
 });
 
+// Rotte pubblicke
+Route::get('/', 'HomeController@index')->name('home');
