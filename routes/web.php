@@ -17,6 +17,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//rotte per autenticazione
+// Auth::routes(["register" => false]); // per disabilitare la registrazione
+// Auth::routes(["verify" => true]); // per attivare la verifica mail al momento della registrazione // di default è disabilitata
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//rotte pubbliche (guest)
+// Route::get('/home', 'HomeController@index')->name('home');
+
+ //tutte le rotte protette da autenticazione (admin)
+Route::middleware('auth') // autenticazione
+    ->namespace('Admin') // controller
+    ->name('admin.') // nome rotte
+    ->prefix('admin') // url rotte
+    ->group(function() {
+    
+        Route::get('/', 'HomeController@index')->name('home');
+        Route::resource('posts', 'PostController');
+
+});
+
