@@ -11,5 +11,8 @@ const mix = require('laravel-mix');
  |
  */
 
+//  aggiungiamo l'istruzione per compilare il file js di vue
+
 mix.js('resources/js/app.js', 'public/js')
+    .js('resources/js/front.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css');

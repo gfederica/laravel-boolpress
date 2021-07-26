@@ -35,4 +35,8 @@ Route::middleware('auth') // autenticazione
 });
 
 // Rotte pubblicke
-Route::get('/', 'HomeController@index')->name('home');
+// Route::get('/', 'HomeController@index')->name('home');
+//Rotta di fallback
+Route::get('{any?}', 'HomeController@index')
+->where('any', '.*')
+->name('home');
