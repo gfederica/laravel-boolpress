@@ -130,6 +130,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'UnderConstruction',
   props: ['title', 'subtitle']
@@ -149,7 +150,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".container[data-v-7ca5e46e] {\n  height: 100vh;\n}\n.container h1[data-v-7ca5e46e] {\n  color: darkmagenta;\n}", ""]);
+exports.push([module.i, ".container[data-v-7ca5e46e] {\n  height: 100vh;\n}\n.container img[data-v-7ca5e46e] {\n  width: 30%;\n}\n.container h1[data-v-7ca5e46e] {\n  color: orange;\n}", ""]);
 
 // exports
 
@@ -1301,7 +1302,9 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "text-center" }, [
-        _c("h1", [_vm._v(_vm._s(_vm.title))]),
+        _c("img", { attrs: { src: "/images/maintenance.png", alt: "" } }),
+        _vm._v(" "),
+        _c("h1", { staticClass: "mt-5" }, [_vm._v(_vm._s(_vm.title))]),
         _vm._v(" "),
         _c("h2", [_vm._v(_vm._s(_vm.subtitle))])
       ])

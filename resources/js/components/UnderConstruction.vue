@@ -1,7 +1,8 @@
 <template>
 <div class="container d-flex justify-content-center align-items-center">
     <div class="text-center">
-        <h1>{{ title }}</h1>
+        <img :src="'/images/maintenance.png'"  alt="">
+        <h1 class="mt-5">{{ title }}</h1>
         <h2>{{ subtitle }}</h2>
     </div>
   </div>
@@ -17,10 +18,14 @@ export default {
 <style lang="scss" scoped>
     .container {
         height: 100vh;
+
+            img {
+                width: 30%;                
+            }
          
             h1 {
-            color: darkmagenta;
-    }
+            color: orange;
+        }
     }
    
 </style>
