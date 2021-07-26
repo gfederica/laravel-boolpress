@@ -10942,7 +10942,17 @@ a.text-dark:focus {
   }
 }
 
+.table-text a,
+.table-text-warn a {
+  font-weight: bold;
+  padding: 6px 20px;
+}
+
 .table-text a {
   color: white;
+}
+
+.table-text-warn a {
+  color: darkslategray;
 }
 
