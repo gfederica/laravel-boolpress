@@ -18,7 +18,7 @@
                         <td>{{ $item->id }}</td>
                         <td>{{ $item->title }}</td>
                         <td>{{ $item->slug }}</td>
-                        <td>SHOW</td>
+                        <td class="table-text"><a class="btn btn-info" href="{{ route('admin.posts.show', $item->id) }}">SHOW</a></td>
                         <td>EDIT</td>
                         <td>DELETE</td>
                     </tr>
