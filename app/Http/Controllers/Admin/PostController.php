@@ -18,9 +18,11 @@ class PostController extends Controller
 
 
     // condizioni di validazioni salvate in alto poichè le richiameremo più volte, non ha senso ripetere lo stesso array in più punti diversi
+    //aggiungo la regola di validazione per category_id con sintassi exists:nometabella,nomecolonna in modo che non ci siano errori se viene inserito un input non presente in db
     private $postValidationArray = [
         'title' => 'required|max:255',
-        'content' => 'required'
+        'content' => 'required',
+        'category_id' => 'nullable|exists:categories,id'
     ];
 
     // funzione per generare slug che non abbiano doppioni, la chiamiamo su store e su update
@@ -98,6 +100,7 @@ class PostController extends Controller
         // salvo lo slug nei miei data
         $data['slug'] = $slug;
         $newPost->fill($data); 
+        //possiamo aggiungere manualmente il salvataggio del category_id oppure aggiungerlo in fillable, così da essere recuperato in automatico
 
         $newPost->save();
 
@@ -112,6 +115,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        // qui non ho bisogno di importare category perchè viene specificata la relazione sui modelli
         return view('admin.posts.show', compact('post'));
     }
 
@@ -123,7 +127,10 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', compact('post'));
+        // anche qui devo passare il model category
+        $categories = Category::all();
+
+        return view('admin.posts.edit', compact('post', 'categories'));
     }
 
     /**
@@ -147,6 +154,7 @@ class PostController extends Controller
             $data["slug"] = $slug;
         }
 
+        // categoria viene importata dal fillable del model post
         $post->update($data);
 
         return redirect()->route('admin.posts.show', $post->id);

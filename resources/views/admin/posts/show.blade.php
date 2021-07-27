@@ -2,7 +2,15 @@
 
 @section('content')
     <div class="container my-4">
-        <h1>{{ $post->title }}</h1>
+        <h1>{{ $post->title }}
+            {{-- se esiste una categoria associata, la visualizzo. navigo e stampo le proprietà della tabella categories navigando la collection categories, è come se facessi una inner join fra le tabelle post e categories. laravel lo fa in automatico perchè ho definito la relazione sui model --}}
+            {{-- se voglio visualizzare gli articoli con quella categoria, mi serve un categorycontroller che mi gestisca le route --}}
+            @if ($post->category)        
+                <a href="" class="badge badge-info">{{ $post->category->name }}</a>
+            @else
+                <span class="badge badge-secondary">Nessuna Categoria</span>     
+            @endif
+        </h1>
         <small>{{ $post->slug }}</small>
         <div class="mt-3">
             <a class="btn btn-warning" href="{{ route('admin.posts.edit', $post->id) }}">Modifica</a>
