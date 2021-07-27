@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,7 +32,8 @@ Route::middleware('auth') // autenticazione
         Route::get('/', 'HomeController@index')->name('home');
         // rotte della crud
         Route::resource('posts', 'PostController');
-
+        // creo la rotta parametrica per la visualizzazione delle categorie
+        Route::get('/categories/{category}', 'CategoryController@show')->name('categories.show');
 });
 
 // Rotte pubblicke
