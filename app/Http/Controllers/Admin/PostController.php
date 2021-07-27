@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
 use Illuminate\Support\Str;
+use App\Category;
 
 class PostController extends Controller
 {
@@ -62,7 +63,14 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        // return view('admin.posts.create');
+        // devo passare alla vista anche le categorie (nel foreach select), quindi devo importare il model category (in alto), fare la query al db con ::all e passarla con un compact
+
+        $categories = Category::all();
+
+        return view('admin.posts.create', compact('categories'));
+
+
     }
 
     /**
