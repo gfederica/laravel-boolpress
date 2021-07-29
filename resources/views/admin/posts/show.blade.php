@@ -18,5 +18,17 @@
             <a class="btn btn-secondary ml-2" href="{{ route('admin.posts.index') }}">Torna all'elenco</a>
         </div>
         <div class="mt-4">{{ $post->content }}</div>
+
+        {{-- gestisco la visualizzazione dei tags. Se ci sono li visualizzo con un foreach --}}
+        @if (count($post->tags) > 0)
+            <div class="mt-5 h4">
+                <h5>Tag correlati:</h5>
+                @foreach ($post->tags as $tag)
+                    <span class="badge badge-pill badge-success">{{ $tag->name }}</span>    
+                @endforeach
+            </div>
+        @else
+            <h5 class="mt-3">Nessun tag</h5>    
+        @endif
     </div>
 @endsection
