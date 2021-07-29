@@ -142,8 +142,9 @@ class PostController extends Controller
     {
         // anche qui devo passare il model category
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin.posts.edit', compact('post', 'categories'));
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -169,6 +170,16 @@ class PostController extends Controller
 
         // categoria viene importata dal fillable del model post
         $post->update($data);
+
+
+        //come per lo store, aggiorno i tag dei post (se ce ne sono). 
+        // uso sync per sincronizzare i nuovi tags, e nell'else uso detach (se il post conteneva tags ma dopo la modifica non ne ha più)
+        if(array_key_exists('tags', $data)) {
+            $post->tags()->sync($data["tags"]);
+        } else {
+            // $post->tags->sync([]);
+            $post->tags()->detach();
+        }
 
         return redirect()->route('admin.posts.show', $post->id);
     }

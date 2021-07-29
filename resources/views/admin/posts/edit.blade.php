@@ -40,6 +40,34 @@
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
+            <div class="form-group mb-5">
+                <h5>Tags</h5>
+                @foreach ($tags as $tag)
+                    <div class="form-check form-check-inline">
+                        {{-- devo sdoppiare la struttura perchè i tag inviati con l'edit sono nella collection del model post e non più semplici array: 
+                         Mantengo la struttura dell'old per gestire errori di validazione, mentre per recuperare il tag precedente devo usare contains.
+                         Uso la struttura base di laravel per la gestione degli errori con @if($errors->any()) che restituisce un booleano --}}
+                        @if ($errors->any())
+                            <input class="form-check-input" name="tags[]" type="checkbox" id="tag-{{ $tag->id }}" value="{{ $tag->id }}"
+                            {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}
+                            >
+                        @else
+                            <input class="form-check-input" name="tags[]" type="checkbox" id="tag-{{ $tag->id }}" value="{{ $tag->id }}"
+                            {{-- metodo contains. Si usa per determinare se l'istanza di un modello è in una collection. 
+                            Se il model del post che sto modificando contiene l'id di un determinato tag, metto il checked a quel value --}}
+                            {{ $post->tags->contains($tag->id) ? 'checked' : '' }}
+                            > 
+                        @endif
+                        
+                        <label class="form-check-label" for="tag-{{ $tag->id }}">{{ $tag->name }}</label>
+                    </div>     
+                @endforeach 
+                @error('tags')
+                    <div>
+                        <small class="text-danger">{{ $message }}</small> 
+                    </div>
+                @enderror   
+            </div>    
             <button type="submit" class="btn btn-primary">Salva</button>
             <a class="btn btn-secondary ml-2" href="{{ route('admin.posts.index') }}">Elenco Post</a>
         </form>
