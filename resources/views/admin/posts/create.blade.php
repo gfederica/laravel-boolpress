@@ -40,6 +40,25 @@
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
+            <div class="form-group mb-5">
+                <h5>Tags</h5>
+                @foreach ($tags as $tag)
+                    <div class="form-check form-check-inline">
+                        {{-- uso l'id del tag perchè devo indicare all'html quale valore ciclare, in alternativa posso scrivere '$loop->iteration' --}}
+                        {{-- per gli altri input il name era il nome della colonna di riferimento, per questo input mettiamo tags[]  perchè deve raccogliere tutte le selezioni, formando un array --}}
+                        <input class="form-check-input" name="tags[]" type="checkbox" id="tag-{{ $tag->id }}" value="{{ $tag->id }}"
+                        {{-- se c'è un errore di validazione, devo conservare il valore precedentemente scelto, essendo un array di valori uso un ternario con la funzione in_array, che verifica la presenza di un dato in un array. sintassi in_array(argomento da cercare, argomento array dove cercare). nel secondo parametro abbiamo messo old(o tags se c'è una selezione, o un array vuoto se non c'è) --}}
+                        {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}
+                        >
+                        <label class="form-check-label" for="tag-{{ $tag->id }}">{{ $tag->name }}</label>
+                    </div>     
+                @endforeach 
+                @error('tags')
+                    <div>
+                        <small class="text-danger">{{ $message }}</small> 
+                    </div>
+                @enderror   
+            </div>    
             <button type="submit" class="btn btn-primary">Crea</button>
             <a class="btn btn-secondary ml-2" href="{{ route('admin.posts.index') }}">Torna all'elenco</a>
         </form>

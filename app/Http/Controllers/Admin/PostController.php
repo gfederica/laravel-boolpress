@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
+use App\Tag;
 use Illuminate\Support\Str;
 use App\Category;
 
@@ -22,7 +23,10 @@ class PostController extends Controller
     private $postValidationArray = [
         'title' => 'required|max:255',
         'content' => 'required',
-        'category_id' => 'nullable|exists:categories,id'
+        //validazione per controllare se l'id della categoria esiste nell'array delle categorie
+        'category_id' => 'nullable|exists:categories,id',
+        // validazione per controllare se i valori selezionati esistono nell'array dei tag, a diff. di categories dobbiamo controllare più valori in una volta
+        'tags' => 'exists:tags,id'
     ];
 
     // funzione per generare slug che non abbiano doppioni, la chiamiamo su store e su update
@@ -69,8 +73,9 @@ class PostController extends Controller
         // devo passare alla vista anche le categorie (nel foreach select), quindi devo importare il model category (in alto), fare la query al db con ::all e passarla con un compact
 
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin.posts.create', compact('categories'));
+        return view('admin.posts.create', compact('categories', 'tags'));
 
 
     }
@@ -101,8 +106,16 @@ class PostController extends Controller
         $data['slug'] = $slug;
         $newPost->fill($data); 
         //possiamo aggiungere manualmente il salvataggio del category_id oppure aggiungerlo in fillable, così da essere recuperato in automatico
-
+        
         $newPost->save();
+
+        // dobbiamo salvare i tag scelti nello store di ogni articolo, quindi nella tabella ponte post_tag. usiamo il metodo attach()
+        //il metodo if gestisce la possibilità di non aver selezionato alcun tag al momento della creazione. Se esiste una chiave all'interno dell array dei tag, faccio l'attach
+        //funzione array_key_exists(parametro chiave da cercare, parametro array dove cercare)
+        if(array_key_exists('tags', $data)) {
+            // va bene anche il metodo sync, ma ha più senso attach perché non ci sono tags inizialmente
+            $newPost->tags()->attach($data["tags"]);
+        }
 
         return redirect()->route('admin.posts.show', $newPost->id);
     }
