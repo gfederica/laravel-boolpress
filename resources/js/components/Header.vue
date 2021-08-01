@@ -9,7 +9,7 @@
                   <a href="#">Blog</a>
               </li>
               <li>
-                  <a href="#">Chi Siamo</a>
+                  <a href="#">Contatti</a>
               </li>
           </ul>
       </nav>

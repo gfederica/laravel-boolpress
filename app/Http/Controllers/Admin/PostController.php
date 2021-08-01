@@ -57,7 +57,7 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::paginate(4);
         // compact costruisce un array associativo con chiave la stringa che mettiamo e valore quelli messi nel db, restituisce una collection del Model Post
         return view('admin.posts.index', compact('posts'));
     }
