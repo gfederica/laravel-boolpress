@@ -193,7 +193,9 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-
+        //non mi serve la cancellazione della riga nella tabella ponte, perchè è gestito da onDelete Cascade. In alternativa uso:
+        // $post->tags()->detach();
+ 
         // faccio un redirect all'index, with ci serve per aggiungere dati alla sessione (flash). passo una chiave 'deleted' e come valore il dato che voglio fare viaggiare, nel caso voglia fare un alert con il titolo dell'articolo che voglio eliminare
         return redirect()
         ->route('admin.posts.index')

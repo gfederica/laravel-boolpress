@@ -24,7 +24,7 @@ class CreatePostTagTable extends Migration
             $table->foreign('post_id')
                 ->references('id')
                 ->on('posts')
-                //cascade cancella la riga di relazione, se manca una delle due fk e quindi non c'è alcuna associazione da verificare
+                //cascade cancella "a cascata" la riga di relazione, se viene cancellata una delle due fk non c'è alcuna associazione da verificare, quindi tutto il record viene eliminato
                 ->onDelete('CASCADE');
 
             $table->unsignedBigInteger('tag_id');
