@@ -23,10 +23,12 @@ use Illuminate\Support\Facades\Route;
 //Posso usare anche i controller come per le rotte web.php (php artisan make:controller Api/PostController), sarà lui a gestire i file json
 
 // Anche in questo caso le raggruppo per namespace (cerca nella cartella Api/PostController). Non hanno un metodo name perché non le chiamiamo con un link ma le passiamo con chiamata axios
+
 Route::namespace('Api')
     ->group(function() {
 
         Route::get('posts', 'PostController@index');
 
     });
+
 
