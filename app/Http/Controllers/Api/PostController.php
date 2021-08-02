@@ -25,4 +25,13 @@ class PostController extends Controller
 
         return response()->json($posts);
     }
+    // recupero il singolo post(faccio un filtro where per recuperare il post con lo slug selezionato, un with per unire alla tabella le info su categorie e tags, e first per restituire solo il primo risultato che matcha i criteri di ricerca), richiamo il controller dentro api.php
+    public function show($slug) {
+
+        $post = Post::where('slug', $slug)
+            ->with(['category', 'tags'])
+            ->first(); // EAGER LOADING (in Blade LAZY LOADING)
+
+        return response()->json($post);
+    }
 }

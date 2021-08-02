@@ -28,6 +28,8 @@ Route::namespace('Api')
     ->group(function() {
 
         Route::get('posts', 'PostController@index');
+        // rotta show del singlepost
+        Route::get('posts/{slug}', 'PostController@show');
 
     });
 

@@ -11,6 +11,7 @@ import SinglePost from './pages/SinglePost';
 
 const router = new VueRouter({
     mode: 'history',  //man mano che mi sposto tra le pagine, usa solo il path che definisco nelle rotte. Di default aggiunge '#'
+    linkExactActiveClass: 'active', //uso l'exact active link per gestire l'active dei link nell'header, rinomino la classe active
     routes : [
         {
             path: '/',

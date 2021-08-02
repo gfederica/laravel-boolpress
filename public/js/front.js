@@ -2242,10 +2242,46 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'SinglePost',
   created: function created() {
-    console.log(this.$route.params.slug);
+    this.getPost(this.$route.params.slug);
+  },
+  // collection post inizialmente vuota
+  data: function data() {
+    return {
+      post: null
+    };
+  },
+  methods: {
+    //  chiamata axios singolo post, come parametro mi serve lo slug perchè lo passo nella query get
+    getPost: function getPost(slug) {
+      var _this = this;
+
+      axios.get("http://127.0.0.1:8000/api/posts/".concat(slug)).then(function (res) {
+        _this.post = res.data;
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    }
   }
 });
 
@@ -3890,7 +3926,58 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("section", { staticClass: "my-5" })
+  return _vm.post
+    ? _c(
+        "section",
+        { staticClass: "my-5" },
+        [
+          _c("h1", [_vm._v(_vm._s(_vm.post.title))]),
+          _vm._v(" "),
+          _c("div", { staticClass: "post-info my-3" }, [
+            _vm.post.category
+              ? _c("h4", [
+                  _c("span", { staticClass: "badge badge-primary" }, [
+                    _vm._v(_vm._s(_vm.post.category.name))
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.post.tags.length > 0
+              ? _c(
+                  "div",
+                  { staticClass: "h5" },
+                  _vm._l(_vm.post.tags, function(tag) {
+                    return _c(
+                      "span",
+                      {
+                        key: "tag-" + tag.id,
+                        staticClass: "badge badge-pills badge-info mr-2"
+                      },
+                      [
+                        _vm._v(
+                          "\n              " +
+                            _vm._s(tag.name) +
+                            "\n              "
+                        )
+                      ]
+                    )
+                  }),
+                  0
+                )
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "my-4" }, [_vm._v(_vm._s(_vm.post.content))]),
+          _vm._v(" "),
+          _c(
+            "router-link",
+            { staticClass: "btn btn-primary", attrs: { to: { name: "blog" } } },
+            [_vm._v("Torna al Blog")]
+          )
+        ],
+        1
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -19918,6 +20005,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
   //man mano che mi sposto tra le pagine, usa solo il path che definisco nelle rotte. Di default aggiunge '#'
+  linkExactActiveClass: 'active',
+  //uso l'exact active link per gestire l'active dei link nell'header, rinomino la classe active
   routes: [{
     path: '/',
     name: 'home',
