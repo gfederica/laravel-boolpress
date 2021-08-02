@@ -5,6 +5,7 @@
 
     <main>
         <!-- component matched by the route will render here -->
+        <!-- un po' come il controller di laravel -->
         <router-view></router-view>
     </main>
 
@@ -37,15 +38,9 @@ export default {
         .get(`http://127.0.0.1:8000/api/posts?page=${page}`)
         .then(
           res => {
-            console.log(res.data);
             this.posts = res.data.data;
             this.current_page = res.data.current_page;
             this.last_page = res.data.last_page;
-            this.posts.forEach(
-              element => {
-                element.excerpt = this.truncateText(element.content, 150);
-              }
-            );
           }
         )
         .catch(

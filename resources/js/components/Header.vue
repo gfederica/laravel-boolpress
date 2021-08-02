@@ -3,13 +3,18 @@
       <nav>
           <ul>
               <li>
-                  <a href="#" class="active">Home</a>
+                 <!-- <a href="#" class="active">Home</a> -->
+
+                    <!-- use router-link component for navigation. -->
+                    <!-- specify the link by passing the `to` prop. -->
+                    <!-- `<router-link>` will be rendered as an `<a>` tag by default -->
+                  <router-link :to="{ name: 'home' }">Home</router-link>
               </li>
               <li>
-                  <a href="#">Blog</a>
+                  <router-link :to="{ name: 'blog' }">Blog</router-link>
               </li>
               <li>
-                  <a href="#">Contatti</a>
+                  <router-link :to="{ name: 'contatti' }">Contatti</router-link>
               </li>
           </ul>
       </nav>
