@@ -1,11 +1,13 @@
 <template>
-  <section class="my-5" v-if="post">
+<!-- mostro la sezione se il post esiste -->
+  <section class="my-5" v-if="!loading && post">
       <h1>{{ post.title }}</h1>
 
         <div class="post-info my-3">
             <h4 v-if="post.category">
                 <span class="badge badge-primary">{{ post.category.name }}</span>
             </h4>
+            <!-- mostro i tag se ce ne sono -->
             <div class="h5" v-if="post.tags.length > 0">
                 <span 
                     v-for="tag in post.tags"
@@ -20,18 +22,25 @@
 
       <router-link class="btn btn-primary" :to="{ name: 'blog' }">Torna al Blog</router-link>
   </section>
+  <Loader v-else />
 </template>
 
 <script>
+import Loader from '../components/Loader';
 export default {
     name: 'SinglePost',
+    components: {
+        Loader
+    },
     created: function() {
+        // richiamo il metodo della chiamata axios al created
         this.getPost(this.$route.params.slug)
     },
     // collection post inizialmente vuota
     data: function() {
         return {
-            post: null
+            post: null,
+            loading: true
         }
     },
      methods: {
@@ -42,6 +51,8 @@ export default {
                 .then(
                     res => {
                         this.post = res.data;
+                        // se importo dei dati, il loading diventa false, disattivo la vista del loader nel v-if dell'articolo
+                        this.loading = false;
                     }
                 )
                 .catch(

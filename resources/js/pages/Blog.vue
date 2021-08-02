@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" v-if="posts.length > 0">
         <h2>Articoli</h2>
         <div class="row">
             <!-- oppure v-for post,index e key=index -->
@@ -41,10 +41,12 @@
                 </button>
             </div>
     </div>
+    <Loader v-else />
 </template>
 
 <script>
 import Card from '../components/Card';
+import Loader from '../components/Loader';
 
 export default {
     name: 'Blog',
@@ -76,7 +78,8 @@ export default {
       }
     },
     components: {
-       Card
+       Card,
+       Loader
     },
     // chiamata axios con created
     //posso spostarla in un method e poi richiamare la funzione nel created
