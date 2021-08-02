@@ -1,5 +1,5 @@
 <template>
-<!-- mostro la sezione se il post esiste -->
+<!-- mostro la sezione se il post esiste e se loading è false: la chiamata axios è andata a buon fine -->
   <section class="my-5" v-if="!loading && post">
       <h1>{{ post.title }}</h1>
 
