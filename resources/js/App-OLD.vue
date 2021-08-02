@@ -4,8 +4,46 @@
     <Header/> 
 
     <main>
-        <!-- component matched by the route will render here -->
-        <router-view></router-view>
+      <h2>Articoli</h2>
+      <div class="row">
+        <!-- oppure v-for post,index e key=index -->
+        <Card 
+          v-for="post in posts"
+          :key="post.id"
+          :item="post"
+        />
+        </div>
+         <div class="text-center mb-4">
+
+            <!-- lo mostro se la pagina corrente è maggiore di 1, per tornare indietro -->
+            <button 
+              v-show="current_page > 1"
+              class="btn btn-info mr-2"
+              @click="getPosts(current_page - 1)"
+              >
+              Prev
+            </button>
+
+            <!-- se la pagina è quella corrente, il button ha un colore, altrimenti un altro stile, ne mostro tanti quante sono le pagine -->
+            <button 
+              class="btn mr-2"
+              :class="(n == current_page) ? 'btn-primary' : 'btn-info'"
+              v-for="n in last_page"
+              :key="n"
+              @click="getPosts(n)"  
+              >
+              {{ n }}
+            </button>
+
+            <!-- se la pagina attiva non è l'ultima, al click vado avanti di pag. -->
+            <button 
+              v-show="current_page < last_page"
+              class="btn btn-info"
+              @click="getPosts(current_page + 1)"
+              >
+              Next
+            </button>
+          </div>
     </main>
 
     <Footer/>
@@ -17,7 +55,7 @@
 <script>
 // import axios from 'axios'; // chiamata axios locale
 import Header from './components/Header';
-// import Card from './components/Card';
+import Card from './components/Card';
 import Footer from './components/Footer';
 // import UnderConstruction from './components/UnderConstruction';
 export default {
@@ -58,7 +96,7 @@ export default {
     components: {
       //  UnderConstruction,
        Header,
-      //  Card,
+       Card,
        Footer
     },
     // chiamata axios con created
