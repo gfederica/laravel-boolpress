@@ -4,7 +4,9 @@
             <div class="card-body">
                 <h4 class="card-title">{{ item.title }}</h4>
                 <p>{{ truncateText(item.content) }}</p>
-                <a href="#" class="card-link">Leggi</a>
+                <!-- insieme all'attributo parametrico su router.js, definisco il dato dinamico nei params -->
+                <router-link :to="{ name: 'single-post', params: { slug: item.slug } }">Leggi</router-link>
+                
             </div>
         </div>       
     </div>
