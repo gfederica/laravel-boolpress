@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Blog from './pages/Blog';
 import Contatti from './pages/Contatti';
 import SinglePost from './pages/SinglePost';
+import NotFound from './pages/NotFound';
 
 const router = new VueRouter({
     mode: 'history',  //man mano che mi sposto tra le pagine, usa solo il path che definisco nelle rotte. Di default aggiunge '#'
@@ -33,6 +34,11 @@ const router = new VueRouter({
             path: '/blog/:slug',
             name: 'single-post',
             component: SinglePost
+        },
+         {
+            path: '*',
+            name: 'not-found',
+            component: NotFound
         }
     ] // short for `routes: routes`
   });

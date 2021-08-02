@@ -32,6 +32,9 @@ class PostController extends Controller
             ->with(['category', 'tags'])
             ->first(); // EAGER LOADING (in Blade LAZY LOADING, fa una query ogni volta che nel blade cerco una proprietà della tabella, serve a velocizzare le query.) Per gli api, laravel usa l'eager loading, ovvero devo chiedere subito i dati che mi servono, in questo caso le relazioni nella tabella posts (categorie e tags, coi nomi dei metodi usati nel model) usando i metodo with.
 
+            // in alternativa, posso aggiungere al Model Post.php: 
+            // protected $with = ['category', 'tags'] farà l'eager loading globale, che varrà per ogni query
+
         return response()->json($post);
     }
 }
