@@ -2303,6 +2303,13 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Loader__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Loader */ "./resources/js/components/Loader.vue");
+/* harmony import */ var _NotFound__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NotFound */ "./resources/js/pages/NotFound.vue");
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2331,10 +2338,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'SinglePost',
   components: {
-    Loader: _components_Loader__WEBPACK_IMPORTED_MODULE_0__["default"]
+    Loader: _components_Loader__WEBPACK_IMPORTED_MODULE_0__["default"],
+    NotFound: _NotFound__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   created: function created() {
     // richiamo il metodo della chiamata axios al created
@@ -2355,7 +2364,14 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("http://127.0.0.1:8000/api/posts/".concat(slug)).then(function (res) {
         _this.post = res.data; // se importo dei dati, il loading diventa false, disattivo la vista del loader nel v-if dell'articolo
 
-        _this.loading = false;
+        _this.loading = false; // soluzione con REDIRECT AUTOMATICO piuttosto che col componente: this.$router.push
+        // if(JSON.stringify(res.data) == '{}') {
+        //     this.$router.push( { name: 'not-found' } );
+        // } else {
+        //     (di norma questo va nel res)
+        //     this.post = res.data;
+        //     this.loading = false;
+        // }
       })["catch"](function (err) {
         console.log(err);
       });
@@ -4217,7 +4233,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return !_vm.loading && _vm.post
+  return !_vm.loading && JSON.stringify(_vm.post) != "{}"
     ? _c(
         "section",
         { staticClass: "my-5" },
@@ -4268,6 +4284,8 @@ var render = function() {
         ],
         1
       )
+    : JSON.stringify(_vm.post) == "{}" && !_vm.loading
+    ? _c("NotFound")
     : _c("Loader")
 }
 var staticRenderFns = []
@@ -20441,7 +20459,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_Blog__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/Blog */ "./resources/js/pages/Blog.vue");
 /* harmony import */ var _pages_Contatti__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/Contatti */ "./resources/js/pages/Contatti.vue");
 /* harmony import */ var _pages_SinglePost__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/SinglePost */ "./resources/js/pages/SinglePost.vue");
-/* harmony import */ var _pages_NotFound__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/NotFound */ "./resources/js/pages/NotFound.vue");
+/* harmony import */ var _pages_NotFound__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/NotFound */ "./resources/js/pages/NotFound.vue");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]); // importo i componenti che uso nelle rotte
@@ -20476,7 +20494,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   }, {
     path: '*',
     name: 'not-found',
-    component: _pages_NotFound__WEBPACK_IMPORTED_MODULE_7__["default"]
+    component: _pages_NotFound__WEBPACK_IMPORTED_MODULE_6__["default"]
   }] // short for `routes: routes`
 
 });
