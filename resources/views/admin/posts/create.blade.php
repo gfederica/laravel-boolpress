@@ -3,7 +3,8 @@
 @section('content')
     <div class="container">
         <h1 class="my-4">Nuovo articolo</h1>
-        <form action="{{ route('admin.posts.store') }}" method="POST">
+        {{-- enctype dice al form che c'è l'inserimento e invio di file --}}
+        <form action="{{ route('admin.posts.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('POST')
             <div class="form-group">
@@ -21,6 +22,15 @@
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
+             {{-- upload immagine, for, name e id stesso nome --}}
+             <div class="form-group">
+                <label for="cover"></label>
+                <input type="file" class="form-control-file @error('cover') is-invalid @enderror" name="cover" id="cover">
+                @error('cover')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
+            </div>
+            {{-- fine upload --}}
             {{-- select per scegliere la categoria al momento della creazione --}}
             <div class="form-group">
                 {{-- label e select id hanno lo stesso nome così gestisco il focus sul click --}}

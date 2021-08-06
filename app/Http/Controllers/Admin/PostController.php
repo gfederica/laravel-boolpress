@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
 use App\Post;
 use App\Tag;
-use Illuminate\Support\Str;
 use App\Category;
 
 class PostController extends Controller
@@ -26,7 +28,9 @@ class PostController extends Controller
         //validazione per controllare se l'id della categoria esiste nell'array delle categorie
         'category_id' => 'nullable|exists:categories,id',
         // validazione per controllare se i valori selezionati esistono nell'array dei tag, a diff. di categories dobbiamo controllare più valori in una volta
-        'tags' => 'exists:tags,id'
+        'tags' => 'exists:tags,id',
+        // esiste anche 'image' ma in locale dà errore
+        'cover' => 'nullable|mimes:jpg,jpeg,png,svg|max:500'
     ];
 
     // funzione per generare slug che non abbiano doppioni, la chiamiamo su store e su update
@@ -102,10 +106,21 @@ class PostController extends Controller
         // $newPost->title = $data["title"];
         // $newPost->content = $data["content"];
 
-        // salvo lo slug nei miei data
+        // salvo lo slug nei miei data e lo salvo
+
+        //aggiungiamo cover nei fillable, e facciamo l'upload solo se c'è un immagine (solo se c'è la chiave cover nei data di quel singolo post)
+        //Dobbiamo salvare non l'oggetto immagine che viene caricato, ma la singola immagine. Importiamo nello use la classe Storage e lo usiamo per caricare il path dell'immagine con la funzione Storage::put() dove tra parentesi indichiamo la sotto-cartella dove salvare l'immagine e come secondo parametro l'oggetto istanza della classe input uploaded file (con un dd si vede l'oggetto Illuminate)
+        // Storage restituisce il percorso relativo del file, adesso dobbiamo salvarlo in una nuova variabile e dentro il db (con $data["cover"] = $img_path sostituisco quello che avevo prima in data cover - ovvero l'oggetto -  e sovrascrivo il path)
+        if(array_key_exists('cover', $data)) {
+            $img_path = Storage::put('post_covers', $data["cover"]);
+            // sovrascrivo l'oggetto di classe uploadedFile con il nome del file restituito dalla put
+            $data["cover"] = $img_path;
+        }
+
         $data['slug'] = $slug;
         $newPost->fill($data); 
         //possiamo aggiungere manualmente il salvataggio del category_id oppure aggiungerlo in fillable, così da essere recuperato in automatico
+     
         
         $newPost->save();
 
