@@ -22,6 +22,8 @@
             </div>
         </div>
 
+        <img class="img-fluid" :src="post.cover" :alt="post.title">
+
       <p class="my-4">{{ post.content }}</p>
 
       <router-link class="btn btn-primary" :to="{ name: 'blog' }">Torna al Blog</router-link>

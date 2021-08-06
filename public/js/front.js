@@ -2337,6 +2337,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4273,6 +4275,11 @@ var render = function() {
                 )
               : _vm._e()
           ]),
+          _vm._v(" "),
+          _c("img", {
+            staticClass: "img-fluid",
+            attrs: { src: _vm.post.cover, alt: _vm.post.title }
+          }),
           _vm._v(" "),
           _c("p", { staticClass: "my-4" }, [_vm._v(_vm._s(_vm.post.content))]),
           _vm._v(" "),
