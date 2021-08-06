@@ -115,6 +115,10 @@ class PostController extends Controller
             $img_path = Storage::put('post_covers', $data["cover"]);
             // sovrascrivo l'oggetto di classe uploadedFile con il nome del file restituito dalla put
             $data["cover"] = $img_path;
+
+            // comando per upload/cancellazione in un disco diverso da quello di default (disk + public/local/s3)
+            // $img_path = Storage::disk('public', $data["cover"]);
+
         }
 
         $data['slug'] = $slug;
