@@ -15,6 +15,26 @@ class PostController extends Controller
         $posts = Post::paginate(6);
 
         
+        // gestisco il recupero della cover con il metodo each, che si applica sulle collection (codice alternativo più in basso), per visualizzare la cover sulla pagina Blog
+        
+        // $posts->each(function ($post) {
+        //     if($post->cover) {
+        //         $post->cover = url('storage/'.$post->cover);
+        //     } else {
+        //         $post->cover = url('images/placeholder.png');
+        //     }
+        // });
+
+
+        foreach($posts as $post) {
+            if($post->cover) {
+                $post->cover = url('storage/'.$post->cover);
+                } else {
+                $post->cover = url('images/placeholder.png');
+                }
+        }
+
+
         // $result = [
         //     'success' = true,
         //     'posts' = $posts
@@ -35,7 +55,7 @@ class PostController extends Controller
             // in alternativa, posso aggiungere al Model Post.php: 
             // protected $with = ['category', 'tags'] farà l'eager loading globale, che varrà per ogni query
 
-            // gestisco il recupero della cover se esiste.
+            // gestisco il recupero della cover se esiste, sulla pagina singlepost.
             // per salvarla uso il metodo url che funziona come l'asset laravel
             if(!empty($post)) {
                 if($post->cover) {

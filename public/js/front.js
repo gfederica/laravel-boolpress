@@ -1995,6 +1995,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Card',
   props: {
@@ -3744,6 +3745,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "col-4 my-3 d-flex" }, [
     _c("div", { staticClass: "card w-100" }, [
+      _c("img", {
+        staticClass: "card-img-top",
+        attrs: { src: _vm.item.cover, alt: "" }
+      }),
+      _vm._v(" "),
       _c(
         "div",
         { staticClass: "card-body" },
