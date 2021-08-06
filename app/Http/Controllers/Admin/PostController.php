@@ -187,6 +187,14 @@ class PostController extends Controller
             $data["slug"] = $slug;
         }
 
+        // gestisco l'update della cover. Se c'è già un'immagine al momento dell'upload, cancello quella precedente con Storage::delete($post->cover)
+        if(array_key_exists('cover', $data)) {
+            if($post->cover) {
+                Storage::delete($post->cover);
+            }
+            $data["cover"] = Storage::put('post_covers', $data["cover"]);
+        } 
+
         // categoria viene importata dal fillable del model post
         $post->update($data);
 
@@ -211,6 +219,12 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        // gestisco la cancellazione dell'immagine, se presente. POtrei lasciare solo post->delete, ma in questo modo cancello anche il file da public, così non appesantisco il sito di file inutili
+        if($post->cover) {
+            Storage::delete($post->cover);
+        }
+
+
         $post->delete();
         //non mi serve la cancellazione della riga nella tabella ponte, perchè è gestito da onDelete Cascade. In alternativa uso:
         // $post->tags()->detach();

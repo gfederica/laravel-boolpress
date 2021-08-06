@@ -22,7 +22,7 @@
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
-             {{-- upload immagine, for, name e id stesso nome --}}
+             {{-- upload immagine, for, name e id stesso nome, non abbiamo possibilità di settare l'old --}}
              <div class="form-group">
                 <label for="cover"></label>
                 <input type="file" class="form-control-file @error('cover') is-invalid @enderror" name="cover" id="cover">

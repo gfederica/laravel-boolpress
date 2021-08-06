@@ -4,7 +4,7 @@
     <div class="container">
         <h1 class="my-4">Modifica: <span class="text-secondary">{{ $post->title }}</span></h1>
         
-        <form action="{{ route('admin.posts.update', $post->id) }}" method="POST">
+        <form action="{{ route('admin.posts.update', $post->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
             <div class="form-group">
@@ -21,6 +21,23 @@
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
+
+             {{-- upload immagine, for, name e id stesso nome, non possiamo settare l'old ma se esiste un immagine prima della modifica, possiamo visualizzarne un'anteprima --}}
+             <div class="form-group">
+                <label for="cover">Immagine Articolo:</label>
+                {{-- visualizzazione anteprima --}}
+                @if ($post->cover)
+                <div class="mb-3">
+                    <img src="{{ asset('storage/'.$post->cover)}}" alt="{{$post->title}}" style="width: 200px">
+                </div>
+                @endif
+                <input type="file" class="form-control-file @error('cover') is-invalid @enderror" name="cover" id="cover">
+                @error('cover')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
+            </div>
+            {{-- fine upload --}}
+
             {{-- select per scegliere la categoria al momento della creazione --}}
             <div class="form-group">
                 {{-- label e select id hanno lo stesso nome così gestisco il focus sul click --}}
